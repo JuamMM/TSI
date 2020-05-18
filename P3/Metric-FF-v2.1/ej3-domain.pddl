@@ -1,9 +1,9 @@
-(define (domain ej2)
+(define (domain ej3)
 
 (:types
 	nodo - localizacion
 	VCE - unidades
-	CentroDeMando Barracones Extractor - edificio
+	CentroDeMando Barracones - edificio
 	Minerales Gas - recursos
 )
 
@@ -47,13 +47,14 @@
 )
 
 (:action CONSTRUIR
-	:parameters (?r - recursos ?e - edificio ?n - localizacion ?u - unidades)
+	:parameters (?e - edificio ?n - localizacion ?u - unidades)
 	:precondition(AND
 		(not(casillaOcupada ?n))
 		(not(ocupada ?u))
 		(unidadEn ?n ?u)
-		(necesitaRecurso ?r ?e)
-		(seTieneRecurso ?r)
+		(forall (?r - recursos)
+			(imply (necesitaRecurso ?r ?e) (seTieneRecurso ?r))
+		)
 	)
 	:effect(AND
 		(edificioEn ?n ?e)
@@ -63,7 +64,7 @@
 )
 
 (:action CONSTRUIREXTRACTOR
-	:parameters (?r - recursos ?n - localizacion ?u - unidades)
+	:parameters (?n - localizacion ?u - unidades)
 	:precondition(AND
 		(not(extractorEn ?n))
 		(not(ocupada ?u))
