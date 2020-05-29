@@ -1,6 +1,6 @@
-(define (problem ej4)
+(define (problem ej6)
 
-	(:domain EJ4)
+	(:domain EJ6)
 
 	(:objects
 		c11 c12 c13 c14 c15
@@ -8,11 +8,16 @@
 		c31 c32 c33 c34 c35
 		c41 c42 c43 c44 c45
 		c51 c52 c53 c54 c55 - nodo
-		base C2 - CentroDeMando
+		base - CentroDeMando
+		bi1 - BahiaIngenieria
 		b1 - Barracones
 		ex1 - Extractor
+		d1 d2 d3 d4 - Deposito
 		v1 v2 v3 - VCE
 		ma1 ma2 - Marine
+		pVCE - invVce
+		pSEG - invSeg
+		pMA - invMar
 		s1 - Segador
 		m1 - Minerales
 		g1 - Gas
@@ -137,7 +142,7 @@
 		;centro de mando
 		(edificioEn c33 base)
 
-		;casillas ocupadas
+		;casillas libres
 		(casillaOcupada c11)
 		(casillaOcupada c12)
 		(casillaOcupada c21)
@@ -147,41 +152,87 @@
 
 		(casillaOcupada c33)
 
+		;Almacenamiento
+		(= (limiteAlmacenamiento) 100)
+
+
 		;VCEs
 		(unidadEn c55 v1)
 
 		;RecursosNecesarios para Reclutar
-		(recursoReclutar m1 v2)
-		(recursoReclutar m1 v3)
+		(= (recursoReclutar m1 v2) 50)
+		(= (recursoReclutar g1 v2) 0)
 
-		(recursoReclutar m1 ma1)
-		(recursoReclutar m1 ma2)
-		(recursoReclutar m1 s1)
-		(recursoReclutar g1 s1)
+		(= (recursoReclutar m1 v3) 50)
+		(= (recursoReclutar g1 v3) 0)
 
+		(= (recursoReclutar m1 ma1) 50)
+		(= (recursoReclutar g1 ma1) 0)
+
+		(= (recursoReclutar m1 ma2) 50)
+		(= (recursoReclutar g1 ma2) 0)
+
+		(= (recursoReclutar m1 s1) 50)
+		(= (recursoReclutar g1 s1) 50)
 
 		;Edifcios necesarios para un VCE
 		(necesitaEdificio base v2)
+		(necesitaEdificio base v3)
+
+		;Edificios necesarios para un Segador y marines
 		(necesitaEdificio b1 ma1)
 		(necesitaEdificio b1 ma2)
 		(necesitaEdificio b1 s1)
 
+		;Investigaciones iniciales
+		(necesitaInvestigacion ma1 pMA)
+		(necesitaInvestigacion ma2 pMA)
+
+		(necesitaInvestigacion v1 pVCE)
+		(necesitaInvestigacion v2 pVCE)
+		(necesitaInvestigacion v3 pVCE)
+
+		(necesitaInvestigacion s1 pSEG)
+
+		(seTieneInves pVCE)
+		(seTieneInves pMA)
+
+		;Cantidades de Recursos
+		(= (cantidadRecurso m1) 0)
+		(= (cantidadRecurso g1) 0)
+
 		;materiales necesarios para un barracon
-		(necesitaRecurso m1 b1)
+		(= (necesitaRecurso m1 b1) 150)
+		(= (necesitaRecurso g1 b1) 0)
 
-		;materiales para un extractor
-		(necesitaRecurso m1 ex1)
+		(= (necesitaRecurso m1 bi1) 125)
+		(= (necesitaRecurso g1 bi1) 0)
 
-		;materiales necesarios para un centro de mando
-		(necesitaRecurso m1 C2)
-		(necesitaRecurso g1 C2)
+		(= (necesitaRecurso m1 ex1) 75)
+		(= (necesitaRecurso g1 ex1) 0)
+
+		(= (necesitaRecurso m1 d1) 75)
+		(= (necesitaRecurso g1 d1) 25)
+
+		(= (necesitaRecurso m1 d2) 75)
+		(= (necesitaRecurso g1 d2) 25)
+
+		(= (necesitaRecurso m1 d3) 75)
+		(= (necesitaRecurso m1 d3) 75)
+
+		(= (necesitaRecurso g1 d4) 25)
+		(= (necesitaRecurso g1 d4) 25)
+
+		(= (investigacionRecurso m1 pSEG) 50)
+		(= (investigacionRecurso g1 pSEG) 200)
+
 	)
 
 	(:goal
 		(AND
-			(unidadEn c44 ma2)
-			(unidadEn c34 ma1)
-			(unidadEn c51 s1)
+			(unidadEn c32 ma1)
+			(unidadEn c22 ma2)
+			(unidadEn c25 s1)
 		)
 	)
 )

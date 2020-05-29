@@ -11,6 +11,7 @@
 		base - CentroDeMando
 		b1 - Barracones
 		v1 v2 v3 - VCE
+		ex1 - Extractor
 		m1 - Minerales
 		g1 - Gas
 	)
@@ -150,7 +151,8 @@
 		(unidadEn c55 v3)
 
 		;materiales necesarios para un barracon
-		(necesitaRecurso m1 b1)
+		(necesitaRecurso g1 b1)
+		(necesitaRecurso m1 ex1)
 	)
 
 	(:goal

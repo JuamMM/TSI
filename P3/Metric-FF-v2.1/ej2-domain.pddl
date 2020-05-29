@@ -12,7 +12,6 @@
 	(tieneRecurso ?n - localizacion ?r -  recursos)
 	(edificioEn ?n - localizacion ?e - edificio)
 	(unidadEn ?n - localizacion ?u - unidades)
-	(extractorEn ?n)
 	(seTieneRecurso ?r - recursos)
 	(camino ?n1 - localizacion ?n2 - localizacion)
 	(ocupada ?u - unidades)
@@ -38,14 +37,38 @@
 		(not(ocupada ?u))
 		(unidadEn ?n1 ?u)
 		(tieneRecurso ?n1 ?r)
-		(extractorEn ?n1)
 	)
 	:effect(AND
 		(ocupada ?u)
+	)
+)
+
+(:action EXTRAERMINERAL
+	:parameters(?u - unidades ?r - Minerales ?n - localizacion)
+	:precondition(AND
+		(ocupada ?u)
+		(unidadEn ?n ?u)
+		(tieneRecurso ?n ?r)
+	)
+	:effect(AND
 		(seTieneRecurso ?r)
 	)
 )
 
+(:action EXTRAERGAS
+	:parameters(?u - unidades ?r - Gas ?n - localizacion)
+	:precondition(AND
+		(ocupada ?u)
+		(unidadEn ?n ?u)
+		(tieneRecurso ?n ?r)
+		(exists (?e - Extractor)
+			(edificioEn ?n ?e)
+		)
+	)
+	:effect(AND
+		(seTieneRecurso ?r)
+	)
+)
 (:action CONSTRUIR
 	:parameters (?r - recursos ?e - edificio ?n - localizacion ?u - unidades)
 	:precondition(AND
@@ -63,15 +86,15 @@
 )
 
 (:action CONSTRUIREXTRACTOR
-	:parameters (?r - recursos ?n - localizacion ?u - unidades)
+	:parameters (?r - recursos ?n - localizacion ?e - Extractor ?u - unidades)
 	:precondition(AND
-		(not(extractorEn ?n))
 		(not(ocupada ?u))
+		(necesitaRecurso ?r ?e)
+		(seTieneRecurso ?r)
 		(unidadEn ?n ?u)
 	)
 	:effect(AND
-		(extractorEn ?n)
-		(casillaOcupada ?n)
+		(EdificioEn ?n ?e)
 	)
 )
 )

@@ -1,6 +1,6 @@
-(define (problem ej4)
+(define (problem ej5)
 
-	(:domain EJ4)
+	(:domain EJ5)
 
 	(:objects
 		c11 c12 c13 c14 c15
@@ -8,11 +8,15 @@
 		c31 c32 c33 c34 c35
 		c41 c42 c43 c44 c45
 		c51 c52 c53 c54 c55 - nodo
-		base C2 - CentroDeMando
+		base - CentroDeMando
+		bi1 - BahiaIngenieria
 		b1 - Barracones
 		ex1 - Extractor
 		v1 v2 v3 - VCE
 		ma1 ma2 - Marine
+		pVCE - invVce
+		pSEG - invSeg
+		pMA - invMar
 		s1 - Segador
 		m1 - Minerales
 		g1 - Gas
@@ -137,7 +141,7 @@
 		;centro de mando
 		(edificioEn c33 base)
 
-		;casillas ocupadas
+		;casillas libres
 		(casillaOcupada c11)
 		(casillaOcupada c12)
 		(casillaOcupada c21)
@@ -159,28 +163,41 @@
 		(recursoReclutar m1 s1)
 		(recursoReclutar g1 s1)
 
-
 		;Edifcios necesarios para un VCE
 		(necesitaEdificio base v2)
+
+		;Edificios necesarios para un Segador y marines
 		(necesitaEdificio b1 ma1)
 		(necesitaEdificio b1 ma2)
 		(necesitaEdificio b1 s1)
 
-		;materiales necesarios para un barracon
-		(necesitaRecurso m1 b1)
+		;Investigaciones iniciales
+		(necesitaInvestigacion ma1 pMA)
+		(necesitaInvestigacion ma2 pMA)
+
+		(necesitaInvestigacion v1 pVCE)
+		(necesitaInvestigacion v2 pVCE)
+		(necesitaInvestigacion v3 pVCE)
+		(necesitaInvestigacion s1 pSEG)
+
+		(seTieneInves pVCE)
+		(seTieneInves pMA)
 
 		;materiales para un extractor
 		(necesitaRecurso m1 ex1)
 
-		;materiales necesarios para un centro de mando
-		(necesitaRecurso m1 C2)
-		(necesitaRecurso g1 C2)
+		;materiales necesarios para un barracon
+		(necesitaRecurso m1 b1)
+
+		;materiales apra una investigacion de segador
+		(investigacionRecurso g1 pSEG)
+
 	)
 
 	(:goal
 		(AND
-			(unidadEn c44 ma2)
-			(unidadEn c34 ma1)
+			(unidadEn c44 ma1)
+			(unidadEn c34 ma2)
 			(unidadEn c51 s1)
 		)
 	)

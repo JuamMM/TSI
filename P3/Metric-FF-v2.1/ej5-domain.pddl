@@ -1,10 +1,11 @@
-(define (domain ej4)
+(define (domain ej5)
 
 (:types
 	nodo - localizacion
 	VCE Marine Segador - unidades
-	CentroDeMando Barracones Extractor - edificio
+	CentroDeMando Barracones BahiaIngenieria Extractor - edificio
 	Minerales Gas - recursos
+	invVce invSeg invMar - investigacion
 )
 
 (:predicates
@@ -16,9 +17,12 @@
 	(seTieneRecurso ?r - recursos)
 	(camino ?n1 - localizacion ?n2 - localizacion)
 	(ocupada ?u - unidades)
-	(necesitaEdificio ?e - edificio ?u - unidades)
+	(investigacionRecurso ?r - recursos ?i - investigacion)
 	(necesitaRecurso ?r - recursos ?e - edificio)
+	(necesitaEdificio ?e - edificio ?u - unidades)
 	(recursoReclutar ?r - recursos ?u - unidades)
+	(necesitaInvestigacion ?u - unidades ?i - investigacion)
+	(seTieneInves ?i - investigacion)
 )
 
 (:action NAVEGAR
@@ -127,6 +131,22 @@
 	)
 	:effect(AND
 		(EdificioEn ?n ?e)
+	)
+)
+
+(:action INVESTIGAR
+	:parameters(?i - investigacion ?b - BahiaIngenieria)
+	:precondition(AND
+		(not(seTieneInves ?i))
+		(exists (?n - localizacion)
+			(edificioEn ?n ?b)
+		)
+		(forall (?r - recursos)
+			(imply (investigacionRecurso ?r ?i) (seTieneRecurso ?r))
+		)
+	)
+	:effect(AND
+		(seTieneInves ?i)
 	)
 )
 )

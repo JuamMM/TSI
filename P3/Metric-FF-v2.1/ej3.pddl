@@ -8,9 +8,10 @@
 		c31 c32 c33 c34 c35
 		c41 c42 c43 c44 c45
 		c51 c52 c53 c54 c55 - nodo
-		base C2 - CentroDeMando
+		base - CentroDeMando
 		b1 - Barracones
 		v1 v2 v3 - VCE
+		ex1 - Extractor
 		m1 - Minerales
 		g1 - Gas
 	)
@@ -150,11 +151,9 @@
 		(unidadEn c55 v3)
 
 		;materiales necesarios para un barracon
+		(necesitaRecurso g1 b1)
 		(necesitaRecurso m1 b1)
-
-		;materiales necesarios para UN centro de mando
-		(necesitaRecurso m1 C2)
-		(necesitaRecurso g1 C2)
+		(necesitaRecurso m1 ex1)
 	)
 
 	(:goal
