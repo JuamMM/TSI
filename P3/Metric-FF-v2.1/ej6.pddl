@@ -12,8 +12,8 @@
 		bi1 - BahiaIngenieria
 		b1 - Barracones
 		ex1 - Extractor
-		d1 d2 d3 d4 - Deposito
-		v1 v2 v3 - VCE
+		d1 - Deposito
+		v1 - VCE
 		ma1 ma2 - Marine
 		pVCE - invVce
 		pSEG - invSeg
@@ -160,11 +160,11 @@
 		(unidadEn c55 v1)
 
 		;RecursosNecesarios para Reclutar
-		(= (recursoReclutar m1 v2) 50)
-		(= (recursoReclutar g1 v2) 0)
+		;(= (recursoReclutar m1 v2) 50)
+		;(= (recursoReclutar g1 v2) 0)
 
-		(= (recursoReclutar m1 v3) 50)
-		(= (recursoReclutar g1 v3) 0)
+		;(= (recursoReclutar m1 v3) 50)
+		;(= (recursoReclutar g1 v3) 0)
 
 		(= (recursoReclutar m1 ma1) 50)
 		(= (recursoReclutar g1 ma1) 0)
@@ -176,8 +176,8 @@
 		(= (recursoReclutar g1 s1) 50)
 
 		;Edifcios necesarios para un VCE
-		(necesitaEdificio base v2)
-		(necesitaEdificio base v3)
+;		(necesitaEdificio base v2)
+;		(necesitaEdificio base v3)
 
 		;Edificios necesarios para un Segador y marines
 		(necesitaEdificio b1 ma1)
@@ -188,9 +188,9 @@
 		(necesitaInvestigacion ma1 pMA)
 		(necesitaInvestigacion ma2 pMA)
 
-		(necesitaInvestigacion v1 pVCE)
-		(necesitaInvestigacion v2 pVCE)
-		(necesitaInvestigacion v3 pVCE)
+		;(necesitaInvestigacion v1 pVCE)
+		;(necesitaInvestigacion v2 pVCE)
+		;(necesitaInvestigacion v3 pVCE)
 
 		(necesitaInvestigacion s1 pSEG)
 
@@ -213,15 +213,6 @@
 
 		(= (necesitaRecurso m1 d1) 75)
 		(= (necesitaRecurso g1 d1) 25)
-
-		(= (necesitaRecurso m1 d2) 75)
-		(= (necesitaRecurso g1 d2) 25)
-
-		(= (necesitaRecurso m1 d3) 75)
-		(= (necesitaRecurso m1 d3) 75)
-
-		(= (necesitaRecurso g1 d4) 25)
-		(= (necesitaRecurso g1 d4) 25)
 
 		(= (investigacionRecurso m1 pSEG) 50)
 		(= (investigacionRecurso g1 pSEG) 200)

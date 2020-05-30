@@ -1,5 +1,6 @@
 (define (domain ej6)
 (:requirements :fluents)
+(:requirements :adl)
 
 (:types
 	nodo - localizacion
@@ -52,12 +53,25 @@
 	)
 )
 
+(:action ASIGNAR
+	:parameters (?u - unidades ?r - recursos ?n1 - localizacion)
+	:precondition(AND
+		(not(ocupada ?u))
+		(unidadEn ?n1 ?u)
+		(tieneRecurso ?n1 ?r)
+	)
+	:effect(AND
+		(ocupada ?u)
+	)
+)
+
 (:action EXTRAERMINERAL
 	:parameters (?u - VCE ?r - Minerales ?n - localizacion)
 	:precondition(AND
+		(ocupada ?u)
 		(unidadEn ?n ?u)
 		(tieneRecurso ?n ?r)
-		(<= (cantidadRecurso ?r) (limiteAlmacenamiento))
+		(< (cantidadRecurso ?r) (limiteAlmacenamiento))
 	)
 	:effect(AND
 		(increase (cantidadRecurso ?r) 10)
@@ -67,11 +81,13 @@
 (:action EXTRAERGAS
 	:parameters (?u - VCE ?r - Gas ?n - localizacion)
 	:precondition(AND
+		(ocupada ?u)
 		(unidadEn ?n ?u)
 		(exists (?e - Extractor)
 			(edificioEn ?n ?e)
 		)
 		(tieneRecurso ?n ?r)
+		(< (cantidadRecurso ?r) (limiteAlmacenamiento))
 	)
 	:effect(AND
 		(increase (cantidadRecurso ?r) 10)
@@ -106,8 +122,10 @@
 		(exists (?b - CentroDeMando)
 			(edificioEn ?n ?b)
 		)
-		(exists (?e - edificio)
-			(necesitaEdificio ?e ?u)
+		(forall (?e - edificio)
+			(exists (?l - localizacion)
+				(imply (necesitaEdificio ?e ?u) (edificioEn ?l ?e))
+			)
 		)
 		(forall (?i - investigacion)
 			(imply (necesitaInvestigacion ?u ?i) (seTieneInves ?i))
@@ -131,9 +149,6 @@
 (:action CONSTRUIR
 	:parameters (?e - edificio ?n - localizacion ?u - unidades)
 	:precondition(AND
-		(not (exists (?l - localizacion)
-			(edificioEn ?l ?e)
-		))
 		(not(casillaOcupada ?n))
 		(not(ocupada ?u))
 		(unidadEn ?n ?u)
