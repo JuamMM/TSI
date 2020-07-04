@@ -44,6 +44,8 @@ public class Agent extends AbstractPlayer{
 
         grid = stateObs.getObservationGrid();
 
+        AEstrella(stateObs);
+
     }
 
     private Vector2d Ajuste( Vector2d coordenadas){
@@ -57,12 +59,7 @@ public class Agent extends AbstractPlayer{
     public Types.ACTIONS act (StateObservation stateObs, ElapsedCpuTimer elapsedTimer) {
         Types.ACTIONS paso = Types.ACTIONS.ACTION_NIL;
 
-        if(PortalEncontrado) {
-            paso = plan.pop();
-        } else{
-            AEstrella(stateObs);
-            paso = plan.pop();
-        }
+        paso = plan.pop();
 
         return paso;
     }
@@ -158,6 +155,8 @@ public class Agent extends AbstractPlayer{
                 }
             }
         }
+
+        plan.clear();
 
         while(n_final.acc != Types.ACTIONS.ACTION_NIL){
 
